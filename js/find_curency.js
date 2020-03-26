@@ -1,89 +1,104 @@
-let conteiner = document.querySelector('.input-cryptocurrency');
-let inputCurency = document.createElement('input');
-let btnInput = document.createElement('a');
-let names=[];
-let ul = document.querySelector('#dropdown');
+let conteiner = document.querySelector(".input-cryptocurrency");
+let inputCurency = document.createElement("input");
+let btnInput = document.createElement("a");
+let names = [];
+let ul = document.querySelector("#dropdown");
 // class
 inputCurency.classList.add("validate");
-inputCurency.placeholder = 'Enter currency';
-btnInput.classList.add('waves-effect', 'waves-light', 'btn','cryptocurrency');
-btnInput.textContent = 'find cryptocurrency';
+inputCurency.placeholder = "Enter currency";
+btnInput.classList.add("waves-effect", "waves-light", "btn", "cryptocurrency");
+btnInput.textContent = "find cryptocurrency";
 //append
 conteiner.prepend(inputCurency);
- // conteiner.append(btnInput);
+// conteiner.append(btnInput);
 
 // find
-const currencyList1 = 'https://api.coinmarketcap.com/v1/ticker/?limit=30';
-    fetch(currencyList1)
-        .then( function (responce) {
-            return responce.json();
-        })
-        .then(function (data) {
-            // let inputToLover = inputCurency.value.toLowerCase();
-            // let rezolt  = data.filter(function (temp) {
-            //     if(inputToLover === temp.id.toLowerCase() || inputToLover ===  temp.symbol.toLowerCase()  ){
-            //         return  temp;
-            //     }
-            // });
-            // createCard(rezolt);
-            names = names.concat(data);
-            return data;
-        }).then(function (arr) {
-        let findCyrrency =(search,currencyNames)=> {
-            let filterArr =   currencyNames.filter(item => {
-                let reg = new RegExp(`^${search}`,'gi');
-                return item.name.match(reg) || item.symbol.match(reg);
-            });
-            return filterArr;
-        };
-        function showResult() {
-            if (document.querySelector('.validate').value === '') {
-                ul.innerHTML= '';
-                window.removeEventListener('keypress', enterpres);
-                request(currencyList);
-            } else {
-                let resultArr = findCyrrency(this.value,names);
-            console.log(this.value);
-            let html =  resultArr.map(item =>{
-                const regex = new RegExp(this.value, 'gi');
-                const nameCurrency = item.name.replace(regex, `<span class="hl">${this.value}</span>`);
-                const symbolCurrency = item.symbol.replace(regex, `<span class="hl">${this.value}</span>`);
-                return `<li>
-        <span class="name">${nameCurrency}</span> 
-        </li>`
-            }).join('');
-            ul.innerHTML = html;
-            window.addEventListener('keypress', enterpres);
-
-        }    
-        }
-         const input = document.querySelector('.validate');
-                input.addEventListener('input',showResult);
-        ul.addEventListener('click',function () {
-              input.value = event.target.textContent.toLowerCase();
-               ul.innerHTML= '';
-            let rezolt  = arr.filter(function (temp) {
-                if(input.value === temp.id.toLowerCase() || input.value ===  temp.symbol.toLowerCase()  ){
-                    return  temp;
-                }
-            });
-            createCard(rezolt);
+const currencyList1 =
+  "https://production.api.coindesk.com/v2/price/values/BTC?start_date=2019-03-24T17:13&end_date=2020-03-25T17:13&ohlc=false";
+fetch(currencyList1)
+  .then(function(responce) {
+    return responce.json();
+  })
+  .then(function(data) {
+    // let inputToLover = inputCurency.value.toLowerCase();
+    // let rezolt  = data.filter(function (temp) {
+    //     if(inputToLover === temp.id.toLowerCase() || inputToLover ===  temp.symbol.toLowerCase()  ){
+    //         return  temp;
+    //     }
+    // });
+    // createCard(rezolt);
+    names = names.concat(data);
+    return data;
+  })
+  .then(function(arr) {
+    let findCyrrency = (search, currencyNames) => {
+      let filterArr = currencyNames.filter(item => {
+        let reg = new RegExp(`^${search}`, "gi");
+        return item.name.match(reg) || item.symbol.match(reg);
       });
-        // странно ,но не срабатует ентер,
-        function enterpres() {
-            // console.log(event.target.value.toLowerCase())
-            if (event.keyCode === 13) {
-               input.value = event.target.value.toLowerCase();
-                    ul.innerHTML= '';
-                let rezolt  = arr.filter(function (temp) {
-                    if(input.value === temp.id.toLowerCase() || input.value ===  temp.symbol.toLowerCase()  ){
-                        return  temp;
-                    }
-                });
-                createCard(rezolt);
-            }
+      return filterArr;
+    };
+    function showResult() {
+      if (document.querySelector(".validate").value === "") {
+        ul.innerHTML = "";
+        window.removeEventListener("keypress", enterpres);
+        request(currencyList);
+      } else {
+        let resultArr = findCyrrency(this.value, names);
+        console.log(this.value);
+        let html = resultArr
+          .map(item => {
+            const regex = new RegExp(this.value, "gi");
+            const nameCurrency = item.name.replace(
+              regex,
+              `<span class="hl">${this.value}</span>`
+            );
+            const symbolCurrency = item.symbol.replace(
+              regex,
+              `<span class="hl">${this.value}</span>`
+            );
+            return `<li>
+        <span class="name">${nameCurrency}</span>
+        </li>`;
+          })
+          .join("");
+        ul.innerHTML = html;
+        window.addEventListener("keypress", enterpres);
+      }
+    }
+    const input = document.querySelector(".validate");
+    input.addEventListener("input", showResult);
+    ul.addEventListener("click", function() {
+      input.value = event.target.textContent.toLowerCase();
+      ul.innerHTML = "";
+      let rezolt = arr.filter(function(temp) {
+        if (
+          input.value === temp.id.toLowerCase() ||
+          input.value === temp.symbol.toLowerCase()
+        ) {
+          return temp;
         }
-       
-        // странно ,но не срабатует
+      });
+      createCard(rezolt);
     });
+    // странно ,но не срабатует ентер,
+    function enterpres() {
+      // console.log(event.target.value.toLowerCase())
+      if (event.keyCode === 13) {
+        input.value = event.target.value.toLowerCase();
+        ul.innerHTML = "";
+        let rezolt = arr.filter(function(temp) {
+          if (
+            input.value === temp.id.toLowerCase() ||
+            input.value === temp.symbol.toLowerCase()
+          ) {
+            return temp;
+          }
+        });
+        createCard(rezolt);
+      }
+    }
+
+    // странно ,но не срабатует
+  });
 // create function filter (name,symbol)
