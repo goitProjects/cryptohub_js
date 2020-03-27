@@ -23,14 +23,11 @@ informBlock.append(butHour);
 informBlock.append(butDay);
 but.append(cloud);
 container.append(fragg);
-// const currencyList = 'https://min-api.cryptocompare.com/data/histominute?fsym=BTC&tsym=USD&limit=60&aggregate=1';
 
 let forRequest = "BTC";
 
-// let ask2;
 function graphUpdate(chart, forRequest, time, limit, formatTime) {
   graphResponse(forRequest, time, limit, formatTime).then(function(data) {
-    console.log("data update", data);
     chart.data.labels = data.time;
     chart.data.datasets.forEach(dataset => {
       dataset.data = data.price;
@@ -38,11 +35,6 @@ function graphUpdate(chart, forRequest, time, limit, formatTime) {
     chart.update();
   });
 }
-
-// console.log(
-//   "moment.unix(unixDate).format(formatTime) ",
-//   moment.unix(1585223099000).format("DD.MM|HH:mm")
-// );
 
 function graphResponse(forRequest, startDate, endDate, formatTime) {
   return fetch(
@@ -54,20 +46,16 @@ function graphResponse(forRequest, startDate, endDate, formatTime) {
       let timeArr = data.map(function(el) {
         return moment(el[0]).format(formatTime);
       });
-      console.log("timeArr ", timeArr);
       let priceArr = data.map(function(el) {
         return el[1].toFixed(2);
       });
-      console.log("priceArr ", priceArr);
       let chartData = {};
       chartData.time = timeArr;
       chartData.price = priceArr;
-      console.dir(chartData);
       return chartData;
     });
 }
-// var c = document.getElementById('myChart');
-// var canvas = c.getContext('2d');
+
 function graphOnOpen(forRequest, startDate, endDate, formatTime) {
   graphResponse(forRequest, startDate, endDate, formatTime)
     .then(function(item) {
@@ -119,11 +107,3 @@ function graphOnOpen(forRequest, startDate, endDate, formatTime) {
       });
     });
 }
-
-// let nowUnixTime = Date.now();
-// console.log("nowUnixTime ", nowUnixTime);
-// let oneDayInMs = 86400000;
-// let startDate = moment(nowUnixTime - oneDayInMs).format("YYYY-MM-DDTHH:MM");
-// let endDate = moment(nowUnixTime).format("YYYY-MM-DDTHH:MM");
-
-// graphOnOpen(forRequest, startDate, endDate, "YYYY-MM-DDTHH:MM");
