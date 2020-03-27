@@ -100,10 +100,10 @@ function graphOnOpen(forRequest, startDate, endDate, formatTime) {
         graphOnOpen(forRequest, startDateDay, endDate, "DD.MM | HH:mm");
       });
       butHour.addEventListener("click", function() {
-        graphOnOpen(forRequest, startDateWeek, endDate, "lll");
+        graphOnOpen(forRequest, startDateWeek, endDate, "L");
       });
       butDay.addEventListener("click", function() {
-        graphOnOpen(forRequest, startDateMonth, endDate, "lll");
+        graphOnOpen(forRequest, startDateMonth, endDate, "L");
       });
     });
 }
