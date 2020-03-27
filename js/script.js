@@ -27,7 +27,7 @@ let arrCrypCurrencies = [
   {
     id: "bitcoin-cash",
     name: "Bitcoin Cash",
-    symbol: "Bitcoin Cash",
+    symbol: "BitcoinCash",
     rank: 2,
     price_usd: 0,
     forRequest: "BCH"
@@ -59,7 +59,7 @@ let arrCrypCurrencies = [
   {
     id: "ethereum-classic",
     name: "Ethereum Classic",
-    symbol: "Ethereum Classic",
+    symbol: "EthereumClassic",
     rank: 6,
     price_usd: 0,
     forRequest: "ETC"
@@ -68,89 +68,100 @@ let arrCrypCurrencies = [
 
 getACourseInArrCrypCurrencies(arrCrypCurrencies);
 
-async function getACourseInArrCrypCurrencies(arr) {
+function getACourseInArrCrypCurrencies(arr) {
   const nowUnixTime = Date.now();
-  console.log("nowUnixTime ", nowUnixTime);
   const oneDayInMs = 86400000;
   const startDate = moment(nowUnixTime - oneDayInMs).format("YYYY-MM-DDTHH:MM");
-  console.log("startDate ", startDate);
   const endDate = moment(nowUnixTime).format("YYYY-MM-DDTHH:MM");
-  console.log("endDate ", endDate);
 
-  const arrWithRequest = await arr.map(async el => {
+  const arrWithRequest = [];
+  arr.map((el, indx) => {
     const reqLink = `https://production.api.coindesk.com/v2/price/values/${el.forRequest}?start_date=${startDate}&end_date=${endDate}&ohlc=false`;
-    await fetch(reqLink)
+
+    fetch(reqLink)
       .then(res => res.json())
       .then(res => {
-        console.log(res.data);
-        console.log(res.data.entries[45][1].toFixed(2));
-        return { ...el, price_usd: res.data.entries[45][1].toFixed(2) };
+        return {
+          ...el,
+          price_usd:
+            res.data.entries[45][1].toFixed(2) ||
+            res.data.entries[50][1].toFixed(2) ||
+            res.data.entries[10][1].toFixed(2) ||
+            res.data.entries[1][1].toFixed(2)
+        };
+      })
+      .then(data => {
+        arrWithRequest[indx] = data;
+        createCard(data);
+        return data;
       });
+    // .then(data => {
+    //   const nowUnixTime = Date.now();
+    //   const oneDayInMs = 86400000;
+    //   const startDate = moment(nowUnixTime - oneDayInMs).format(
+    //     "YYYY-MM-DDTHH:MM"
+    //   );
+    //   const endDate = moment(nowUnixTime).format("YYYY-MM-DDTHH:MM");
+
+    //   document
+    //     .querySelector(`a[id=${data.symbol}]`)
+    //     .addEventListener("click", () =>
+    //       graphOnOpen(data.forRequest, startDate, endDate, "DD.MM|HH:mm")
+    //     );
+    // });
   });
-  console.log("arrWithRequest ", arrWithRequest);
-  // createCard(arrWithRequest);
 }
-
-// console.log(
-//   'moment(Date.now()).format("YYYY-MM-DDTHH-MM") ',
-//   moment(Date.now()).format("YYYY-MM-DDTHH-MM")
-// );
-
-// console.log(moment.unix(1585094519).format("YYYY-MM-DDTHH-MM"));
 
 function createCard(data) {
   let string = "";
-  for (let i = 0; i < data.length; i++) {
-    string += `<div class="card"> 
+  string += `<div class="card"> 
       <div class="card-image">
-        <img src=img/svg/${data[i].id}.svg>
-        <span class="card-title"> ${data[i].name} </span> 
-        <a class="btn-floating halfway-fab waves-effect waves-light red modal-trigger" href="#modal1" id="${data[i].symbol}">
+        <img src=img/svg/${data.id}.svg>
+        <span class="card-title"> ${data.name} </span> 
+        <a class="btn-floating halfway-fab waves-effect waves-light red modal-trigger" href="#modal1" id="${data.forRequest}" name="${data.name}">
         <i class="material-icons">add</i>
         </a> 
       </div>  
       
       <div class="card-content"> 
-        <p>rank: ${data[i].rank}</p> 
-        <p> ${data[i].symbol}: ${data[i].price_usd} USD</p> 
+        <p>rank: ${data.rank}</p> 
+        <p> ${data.symbol}: ${data.price_usd} USD</p> 
       </div> 
   </div> `;
-  }
-  box.innerHTML = string;
+  box.insertAdjacentHTML("beforeend", string);
 }
 
-function request(link) {
-  fetch(link)
-    .then(function(response) {
-      return response.json();
-    })
-    .then(function(data) {
-      // console.log(data);
-      createCard(data);
-      return data;
-    });
-  // .then(function(data2) {
-  //   btn.addEventListener("click", function() {
-  //     createCard(max(data2));
-  //   });
-  //   alph.addEventListener("click", function() {
-  //     createCard(sort(data2));
-  //   });
-  //   val.addEventListener("click", function() {
-  //     createCard(min(data2));
-  //   });
-  //   value.addEventListener("click", function() {
-  //     createCard(day(data2));
-  //   });
-  //   vall.addEventListener("click", function() {
-  //     createCard(hour(data2));
-  //   });
-  //   rank.addEventListener("click", function() {
-  //     createCard(rank1(data2));
-  //   });
-  // });
-}
-// request(currencyList);
+// function request(link) {
+//   fetch(link)
+//     .then(function(response) {
+//       return response.json();
+//     })
+//     .then(function(data) {
+//       // console.log(data);
+//       createCard(data);
+//       return data;
+//     })
+//     .then(function(data2) {
+//       btn.addEventListener("click", function() {
+//         createCard(max(data2));
+//       });
+//       alph.addEventListener("click", function() {
+//         createCard(sort(data2));
+//       });
+//       val.addEventListener("click", function() {
+//         createCard(min(data2));
+//       });
+//       value.addEventListener("click", function() {
+//         createCard(day(data2));
+//       });
+//       vall.addEventListener("click", function() {
+//         createCard(hour(data2));
+//       });
+//       rank.addEventListener("click", function() {
+//         createCard(rank1(data2));
+//       });
+//     });
+// }
 
 $(".modal").modal({
   dismissible: true, // Modal can be dismissed by clicking outside of the modal
@@ -162,14 +173,25 @@ $(".modal").modal({
   ready: function(modal, trigger) {
     // Callback for Modal open. Modal and trigger parameters available.
     // alert("Ready");
-    // console.log(modal, trigger);
+    console.log("trigger ", trigger);
     let grap = document.querySelector(".grap");
     grap.innerHTML = `<canvas id="myChart"></canvas>`;
-    id = trigger[0].id;
-    graphOnOpen(id, "histohour", 24, "D.MM | HH:mm");
+    forRequest = trigger[0].id;
+    console.log("forRequest ", forRequest);
+    // graphOnOpen(id, "histohour", 24, "D.MM | HH:mm");
+
+    const nowUnixTime = Date.now();
+    const oneDayInMs = 86400000;
+    const startDate = moment(nowUnixTime - oneDayInMs).format(
+      "YYYY-MM-DDTHH:MM"
+    );
+    const endDate = moment(nowUnixTime).format("YYYY-MM-DDTHH:MM");
+
+    graphOnOpen(forRequest, startDate, endDate, "DD.MM | HH:mm");
+
     let modHead = document.querySelector(".modal-title");
-    modHead.textContent = id;
-    console.log(trigger[0].id);
+    modHead.textContent = trigger[0].name;
+    // console.log(trigger[0].forRequest);
   },
   complete: function() {
     // alert('Closed');
