@@ -25,28 +25,12 @@ let arrCrypCurrencies = [
     forRequest: "BTC"
   },
   {
-    id: "bitcoin-cash",
-    name: "Bitcoin Cash",
-    symbol: "BitcoinCash",
-    rank: 2,
-    price_usd: 0,
-    forRequest: "BCH"
-  },
-  {
     id: "litecoin",
     name: "Litecoin",
     symbol: "Litecoin",
     rank: 3,
     price_usd: 0,
     forRequest: "LTC"
-  },
-  {
-    id: "tron",
-    name: "TRON",
-    symbol: "TRON",
-    rank: 4,
-    price_usd: 0,
-    forRequest: "TRX"
   },
   {
     id: "zcash",
@@ -57,12 +41,52 @@ let arrCrypCurrencies = [
     forRequest: "ZEC"
   },
   {
+    id: "bitcoin-gold",
+    name: "Bitcoin Gold",
+    symbol: "BitcoinGold",
+    rank: 4,
+    price_usd: 0,
+    forRequest: "BTG"
+  },
+  {
     id: "ethereum-classic",
     name: "Ethereum Classic",
     symbol: "EthereumClassic",
     rank: 6,
     price_usd: 0,
     forRequest: "ETC"
+  },
+  {
+    id: "ethereum",
+    name: "Ethereum",
+    symbol: "Ethereum",
+    rank: 6,
+    price_usd: 0,
+    forRequest: "ETH"
+  },
+  {
+    id: "monero",
+    name: "Monero",
+    symbol: "Monero",
+    rank: 6,
+    price_usd: 0,
+    forRequest: "XMR"
+  },
+  {
+    id: "dash",
+    name: "Dash",
+    symbol: "Dash",
+    rank: 6,
+    price_usd: 0,
+    forRequest: "DASH"
+  },
+  {
+    id: "bitcoin-cash",
+    name: "Bitcoin Cash",
+    symbol: "BitcoinCash",
+    rank: 2,
+    price_usd: 0,
+    forRequest: "BCH"
   }
 ];
 
@@ -124,8 +148,8 @@ function createCard(data) {
       </div>  
       
       <div class="card-content"> 
-        <p>rank: ${data.rank}</p> 
-        <p> ${data.symbol}: ${data.price_usd} USD</p> 
+      <h5 class="card-sub-title">Change</h5>
+        <p class="card-sub-title-second"> ${data.symbol}: ${data.price_usd} USD</p> 
       </div> 
   </div> `;
   box.insertAdjacentHTML("beforeend", string);
