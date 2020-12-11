@@ -141,7 +141,7 @@ function createCard(data) {
       </div>  
       
       <div class="card-content"> 
-      <h5 class="card-sub-title">Change</h5>
+      <h5 class="card-sub-title">Zmień</h5>
         <p class="card-sub-title-second"> ${data.symbol}: ${data.price_usd} USD</p> 
       </div> 
   </div> `;
@@ -161,7 +161,7 @@ function createCardFromArr(arr) {
       </div>  
       
       <div class="card-content"> 
-      <h5 class="card-sub-title">Change</h5>
+      <h5 class="card-sub-title">Zmień</h5>
         <p class="card-sub-title-second"> ${arr[i].symbol}: ${arr[i].price_usd} USD</p> 
       </div> 
   </div> `;

@@ -12,10 +12,10 @@ butHour.classList.add("waves-effect", "waves-light", "btn", "cli");
 butDay.classList.add("waves-effect", "waves-light", "btn", "cli");
 cloud.classList.add("material-icons", "left");
 //input text
-but.textContent = "Last 24 hours";
+but.textContent = "Ostatnie 24 godziny";
 // cloud.textContent = 'cloud';
-butHour.textContent = "Last 1 week";
-butDay.textContent = "Last 1 month";
+butHour.textContent = "Ostatnie 7 dni";
+butDay.textContent = "Ostatni miesiąc";
 //put in
 container.append(informBlock);
 informBlock.append(but);

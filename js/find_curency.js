@@ -5,7 +5,7 @@ let names = [];
 let ul = document.querySelector("#dropdown");
 // class
 inputCurency.classList.add("validate");
-inputCurency.placeholder = "Enter currency name";
+inputCurency.placeholder = "Wprowadź nazwę wałuty";
 btnInput.classList.add("waves-effect", "waves-light", "btn", "cryptocurrency");
 btnInput.textContent = "find cryptocurrency";
 //append
