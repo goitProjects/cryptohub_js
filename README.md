@@ -1,11 +1,11 @@
 # cryptohub_js
 
-Students project cryptohub, js project
+Students project cryptohub, js project for Poland, on polish language
 
 ## Рабочая ссылка на проект:
 
-https://cryptohub.goit.ua/
+https://goit.global/pl/students_projects/cryptohub/
 
 ## Допольнительная информация:
 
-Ветка master самая актуальная в проекте.
+За веткой masterOnPlLanguage следит jenkinsGoIT и при пушах и пулл реквестах в ветку выгружает содержимое проекта на сервер.
