@@ -1,11 +1,11 @@
 # cryptohub_js
 
-Students project cryptohub, js project
+Students project cryptohub
 
 ## Рабочая ссылка на проект:
 
-https://cryptohub.goit.ua/
+https://goit.global/students_projects/cryptohub/
 
 ## Допольнительная информация:
 
-Ветка master самая актуальная в проекте.
+За веткой master следит jenkinsGoIT и при пушах и пулл реквестах в ветку выгружает содержимое проекта на сервер.
