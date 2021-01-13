@@ -4,7 +4,7 @@ Students project cryptohub, js project for Poland, on polish language
 
 ## Рабочая ссылка на проект:
 
-https://goit.global/pl/students_projects/cryptohub/
+https://goit.global/pl/student_projects/cryptohub/
 
 ## Допольнительная информация:
 
