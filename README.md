@@ -4,8 +4,6 @@ Students project cryptohub
 
 ## Рабочая ссылка на проект:
 
-https://goit.global/students_projects/cryptohub/
-
 https://cryptohub.goit.global/
 
 ## Допольнительная информация:
