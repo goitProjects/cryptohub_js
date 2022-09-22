@@ -12,7 +12,7 @@ btnInput.textContent = "find cryptocurrency";
 conteiner.prepend(inputCurency);
 
 function handlerChangeSearchInput(e, arr) {
-  const searchArr = arr.filter(el =>
+  const searchArr = arr.filter((el) =>
     el.name.toLowerCase().includes(e.target.value.toLowerCase())
   );
   createCardFromArr(searchArr);

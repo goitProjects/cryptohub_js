@@ -16,7 +16,7 @@ let arrCrypCurrencies = [
     symbol: "Bitcoin",
     rank: 1,
     price_usd: 0,
-    forRequest: "BTC"
+    forRequest: "BTC",
   },
   {
     id: "litecoin",
@@ -24,7 +24,7 @@ let arrCrypCurrencies = [
     symbol: "Litecoin",
     rank: 3,
     price_usd: 0,
-    forRequest: "LTC"
+    forRequest: "LTC",
   },
   {
     id: "zcash",
@@ -32,7 +32,7 @@ let arrCrypCurrencies = [
     symbol: "Zcash",
     rank: 5,
     price_usd: 0,
-    forRequest: "ZEC"
+    forRequest: "ZEC",
   },
   {
     id: "bitcoin-gold",
@@ -40,7 +40,7 @@ let arrCrypCurrencies = [
     symbol: "BitcoinGold",
     rank: 4,
     price_usd: 0,
-    forRequest: "BTG"
+    forRequest: "BTG",
   },
   {
     id: "ethereum-classic",
@@ -48,7 +48,7 @@ let arrCrypCurrencies = [
     symbol: "EthereumClassic",
     rank: 6,
     price_usd: 0,
-    forRequest: "ETC"
+    forRequest: "ETC",
   },
   {
     id: "ethereum",
@@ -56,7 +56,7 @@ let arrCrypCurrencies = [
     symbol: "Ethereum",
     rank: 6,
     price_usd: 0,
-    forRequest: "ETH"
+    forRequest: "ETH",
   },
   {
     id: "monero",
@@ -64,7 +64,7 @@ let arrCrypCurrencies = [
     symbol: "Monero",
     rank: 6,
     price_usd: 0,
-    forRequest: "XMR"
+    forRequest: "XMR",
   },
   {
     id: "dash",
@@ -72,7 +72,7 @@ let arrCrypCurrencies = [
     symbol: "Dash",
     rank: 6,
     price_usd: 0,
-    forRequest: "DASH"
+    forRequest: "DASH",
   },
   {
     id: "bitcoin-cash",
@@ -80,8 +80,8 @@ let arrCrypCurrencies = [
     symbol: "BitcoinCash",
     rank: 2,
     price_usd: 0,
-    forRequest: "BCH"
-  }
+    forRequest: "BCH",
+  },
 ];
 
 getACourseInArrCrypCurrencies(arrCrypCurrencies);
@@ -97,32 +97,32 @@ function getACourseInArrCrypCurrencies(arr) {
     const reqLink = `https://production.api.coindesk.com/v2/price/values/${el.forRequest}?start_date=${startDate}&end_date=${endDate}&ohlc=false`;
 
     fetch(reqLink)
-      .then(res => res.json())
-      .then(res => {
+      .then((res) => res.json())
+      .then((res) => {
         return {
           ...el,
           price_usd:
             res.data.entries[45][1].toFixed(2) ||
             res.data.entries[50][1].toFixed(2) ||
             res.data.entries[10][1].toFixed(2) ||
-            res.data.entries[1][1].toFixed(2)
+            res.data.entries[1][1].toFixed(2),
         };
       })
-      .then(data => {
+      .then((data) => {
         arrWithRequest[indx] = data;
         createCard(data);
         return data;
       })
       .then(() => {
-        inputCurency.addEventListener("input", e => {
+        inputCurency.addEventListener("input", (e) => {
           handlerChangeSearchInput(e, arrWithRequest);
         });
       })
-      .then(function() {
-        btn.addEventListener("click", function() {
+      .then(function () {
+        btn.addEventListener("click", function () {
           createCardFromArr(max(arrWithRequest));
         });
-        val.addEventListener("click", function() {
+        val.addEventListener("click", function () {
           createCardFromArr(min(arrWithRequest));
         });
       });
@@ -133,7 +133,7 @@ function createCard(data) {
   let string = "";
   string += `<div class="card"> 
       <div class="card-image">
-        <img src=img/svg/${data.id}.svg>
+        <img src=./assets/img/svg/${data.id}.svg>
         <span class="card-title"> ${data.name} </span> 
         <a class="btn-floating halfway-fab waves-effect waves-light red modal-trigger" href="#modal1" id="${data.forRequest}" name="${data.name}">
         <i class="material-icons">add</i>
@@ -153,7 +153,7 @@ function createCardFromArr(arr) {
   for (let i = 0; i < arr.length; i++) {
     string += `<div class="card"> 
       <div class="card-image">
-        <img src=img/svg/${arr[i].id}.svg>
+        <img src=./assets/img/svg/${arr[i].id}.svg>
         <span class="card-title"> ${arr[i].name} </span> 
         <a class="btn-floating halfway-fab waves-effect waves-light red modal-trigger" href="#modal1" id="${arr[i].forRequest}" name="${arr[i].name}">
         <i class="material-icons">add</i>
@@ -176,7 +176,7 @@ $(".modal").modal({
   outDuration: 200, // Transition out duration
   startingTop: "4%", // Starting top style attribute
   endingTop: "10%", // Ending top style attribute
-  ready: function(modal, trigger) {
+  ready: function (modal, trigger) {
     // Callback for Modal open. Modal and trigger parameters available.
     // alert("Ready");
     let grap = document.querySelector(".grap");
@@ -196,7 +196,7 @@ $(".modal").modal({
     let modHead = document.querySelector(".modal-title");
     modHead.textContent = trigger[0].name;
   },
-  complete: function() {
+  complete: function () {
     // alert('Closed');
-  } // Callback for Modal close
+  }, // Callback for Modal close
 });

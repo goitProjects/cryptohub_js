@@ -9,7 +9,7 @@ node("nodejs"){
             string(credentialsId: 'tech_alert_bot_api_key', variable: 'telegramAlertChannelBotApiToken'),
             string(credentialsId: 'tech_alert_chat_id', variable: 'telegramAlertChannelChatId'),
 
-            //add ftp credential for cryptohub
+            //add ftp credential for https://cryptohub.p.goit.global/
             string(credentialsId: 'ftp_user_pass_and_host_for_cryptohub', variable: 'ftpUserAndPass')
         ]) {
                 env.telegramNotifyChannelBotApiToken = telegramNotifyChannelBotApiToken;
@@ -50,8 +50,9 @@ node("nodejs"){
 
         if (success) {
             catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                //sent files to  https://cryptohub.goit.global
+                //sent files to  https://cryptohub.p.goit.global/
                 sh "ncftpput ${env.ftpUserAndPass} / ./*"
+                sh "rm -r *"
             }
         }
     }
