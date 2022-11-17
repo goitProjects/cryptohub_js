@@ -52,6 +52,8 @@ node("nodejs"){
             catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
                 //sent files to  https://goit.global/pl/student_projects/cryptohub/
                 sh "ncftpput ${env.ftpUserAndPass} / ./*"
+                //clear project build folder
+                sh "rm -rf .[!.]* *"
             }
         }
     }
