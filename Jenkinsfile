@@ -6,15 +6,13 @@ node("nodejs"){
             string(credentialsId: 'goit_jenkins_build_bot_api_key', variable: 'telegramNotifyChannelBotApiToken'),
             string(credentialsId: 'goit_jenkins_build_chat_id', variable: 'telegramNotifyChannelChatId'),
 
-            //add scp redential for https://cryptohub.p.goit.global/pl/ 
-            string(credentialsId: 'ssh user_host_for_frontend_stud', variable: 'sshUserAndHost')
+            //add ftp credential for https://cryptohub.p.goit.global/
+            string(credentialsId: 'ftp_user_pass_and_host_for_cryptohub', variable: 'ftpUserAndPass')
         ]) {
                 env.telegramNotifyChannelBotApiToken = telegramNotifyChannelBotApiToken;
                 env.telegramNotifyChannelChatId = telegramNotifyChannelChatId;
             
-                env.sshUserAndHost = sshUserAndHost;
-
-                env.projectFolder = 'cryptohub.p.goit.global/html/pl/';
+                env.ftpUserAndPass = ftpUserAndPass;
         }
     }
     
@@ -40,21 +38,16 @@ node("nodejs"){
         catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
             git branch: 'masterOnPlLanguage', credentialsId: 'github-goitProjects', url: 'git@github.com:goitProjects/cryptohub_js.git'
         }
-    }
-    
+    }    
     
     stage('Deploy') {
          def success = 'SUCCESS'.equals(currentBuild.currentResult);
 
         if (success) {
             catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                //create folder for care-pets
-                def mkdirCmd = "mkdir -p /home/frontend/sites/www/${env.projectFolder}"
-                sh "ssh ${env.sshUserAndHost} ${mkdirCmd}"
-
-                //sent files to https://care-pets.p.goit.global
-                sh "scp -r ./* ${env.sshUserAndHost}:/home/frontend/sites/www/${env.projectFolder}"
-
+                //sent files to  https://cryptohub.p.goit.global/
+                sh "ncftpput ${env.ftpUserAndPass} /pl/ ./*"
+                
                 //clear project build folder
                 sh "rm -rf .[!.]* *"
             }
