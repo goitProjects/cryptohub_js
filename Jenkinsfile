@@ -5,19 +5,16 @@ node("nodejs"){
         withCredentials([
             string(credentialsId: 'goit_jenkins_build_bot_api_key', variable: 'telegramNotifyChannelBotApiToken'),
             string(credentialsId: 'goit_jenkins_build_chat_id', variable: 'telegramNotifyChannelChatId'),
-                
-            string(credentialsId: 'tech_alert_bot_api_key', variable: 'telegramAlertChannelBotApiToken'),
-            string(credentialsId: 'tech_alert_chat_id', variable: 'telegramAlertChannelChatId'),
 
-            //add ftp credential for https://goit.global/pl/student_projects/cryptohub/
-            string(credentialsId: 'ftp_user_pass_host_for_pl_cryptohub', variable: 'ftpUserAndPass')
+            //add scp redential for https://cryptohub.p.goit.global/pl/ 
+            string(credentialsId: 'ssh user_host_for_frontend_stud', variable: 'sshUserAndHost')
         ]) {
                 env.telegramNotifyChannelBotApiToken = telegramNotifyChannelBotApiToken;
                 env.telegramNotifyChannelChatId = telegramNotifyChannelChatId;
-                env.telegramAlertChannelBotApiToken = telegramAlertChannelBotApiToken;
-                env.telegramAlertChannelChatId = telegramAlertChannelChatId;
             
-                env.ftpUserAndPass = ftpUserAndPass;
+                env.sshUserAndHost = sshUserAndHost;
+
+                env.projectFolder = 'cryptohub.p.goit.global/html/pl/';
         }
     }
     
@@ -43,15 +40,21 @@ node("nodejs"){
         catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
             git branch: 'masterOnPlLanguage', credentialsId: 'github-goitProjects', url: 'git@github.com:goitProjects/cryptohub_js.git'
         }
-    }    
+    }
+    
     
     stage('Deploy') {
          def success = 'SUCCESS'.equals(currentBuild.currentResult);
 
         if (success) {
             catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                //sent files to  https://goit.global/pl/student_projects/cryptohub/
-                sh "ncftpput ${env.ftpUserAndPass} / ./*"
+                //create folder for care-pets
+                def mkdirCmd = "mkdir -p /home/frontend/sites/www/${env.projectFolder}"
+                sh "ssh ${env.sshUserAndHost} ${mkdirCmd}"
+
+                //sent files to https://care-pets.p.goit.global
+                sh "scp -r ./* ${env.sshUserAndHost}:/home/frontend/sites/www/${env.projectFolder}"
+
                 //clear project build folder
                 sh "rm -rf .[!.]* *"
             }
@@ -86,13 +89,5 @@ node("nodejs"){
             message
         )
         
-        //Send message to alert channel only if failed or restore build success
-        if (!success || (success && !previousBuildSuccess)) {
-             sendTelegramChannelMessage(
-                env.telegramAlertChannelBotApiToken,
-                env.telegramAlertChannelChatId,
-                message
-            )
-        }
     }
 }
